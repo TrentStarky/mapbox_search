@@ -34,6 +34,7 @@ class MapBoxPlace {
   final List<PlaceType?> placeType;
 
   // dynamic relevance;
+  @JsonKey(name: 'address')
   final String? addressNumber;
   final Properties? properties;
   final String? text;
@@ -43,7 +44,7 @@ class MapBoxPlace {
   @OptionalLocationConverter()
   final Location? center;
   final Geometry? geometry;
-  // final List<Context>? context;
+  final List<PlaceContext>? context;
   final String? matchingText;
   final String? matchingPlaceName;
 
@@ -59,7 +60,7 @@ class MapBoxPlace {
     this.bbox,
     this.center,
     this.geometry,
-    // this.context,
+    this.context,
     this.matchingText,
     this.matchingPlaceName,
   });
@@ -73,33 +74,33 @@ class MapBoxPlace {
   String toString() => text ?? placeName!;
 }
 
-// class Context {
-//   String? id;
-//   String? shortCode;
-//   String? wikidata;
-//   String? text;
+class PlaceContext {
+  String? id;
+  String? shortCode;
+  String? wikidata;
+  String? text;
 
-//   Context({
-//     this.id,
-//     this.shortCode,
-//     this.wikidata,
-//     this.text,
-//   });
+  PlaceContext({
+    this.id,
+    this.shortCode,
+    this.wikidata,
+    this.text,
+  });
 
-//   factory Context.fromJson(Map<String, dynamic> json) => Context(
-//         id: json["id"],
-//         shortCode: json["short_code"],
-//         wikidata: json["wikidata"],
-//         text: json["text"],
-//       );
+  factory PlaceContext.fromJson(Map<String, dynamic> json) => PlaceContext(
+        id: json["id"],
+        shortCode: json["short_code"],
+        wikidata: json["wikidata"],
+        text: json["text"],
+      );
 
-//   Map<String, dynamic> toJson() => {
-//         "id": id,
-//         "short_code": shortCode,
-//         "wikidata": wikidata,
-//         "text": text,
-//       };
-// }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "short_code": shortCode,
+        "wikidata": wikidata,
+        "text": text,
+      };
+}
 
 enum GeometryType {
   @JsonValue("Point")

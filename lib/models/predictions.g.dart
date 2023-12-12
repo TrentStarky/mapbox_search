@@ -29,7 +29,7 @@ MapBoxPlace _$MapBoxPlaceFromJson(Map<String, dynamic> json) => MapBoxPlace(
               ?.map((e) => $enumDecodeNullable(_$PlaceTypeEnumMap, e))
               .toList() ??
           const [],
-      addressNumber: json['address_number'] as String?,
+      addressNumber: json['address'] as String?,
       properties: json['properties'] == null
           ? null
           : Properties.fromJson(json['properties'] as Map<String, dynamic>),
@@ -42,6 +42,9 @@ MapBoxPlace _$MapBoxPlaceFromJson(Map<String, dynamic> json) => MapBoxPlace(
       geometry: json['geometry'] == null
           ? null
           : Geometry.fromJson(json['geometry'] as Map<String, dynamic>),
+      context: (json['context'] as List<dynamic>?)
+          ?.map((e) => PlaceContext.fromJson(e as Map<String, dynamic>))
+          .toList(),
       matchingText: json['matching_text'] as String?,
       matchingPlaceName: json['matching_place_name'] as String?,
     );
@@ -52,7 +55,7 @@ Map<String, dynamic> _$MapBoxPlaceToJson(MapBoxPlace instance) =>
       'type': _$FeatureTypeEnumMap[instance.type],
       'place_type':
           instance.placeType.map((e) => _$PlaceTypeEnumMap[e]).toList(),
-      'address_number': instance.addressNumber,
+      'address': instance.addressNumber,
       'properties': instance.properties,
       'text': instance.text,
       'place_name': instance.placeName,
@@ -60,6 +63,7 @@ Map<String, dynamic> _$MapBoxPlaceToJson(MapBoxPlace instance) =>
           instance.bbox, const BBoxConverter().toJson),
       'center': const OptionalLocationConverter().toJson(instance.center),
       'geometry': instance.geometry,
+      'context': instance.context,
       'matching_text': instance.matchingText,
       'matching_place_name': instance.matchingPlaceName,
     };
